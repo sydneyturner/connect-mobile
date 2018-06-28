@@ -1,0 +1,45 @@
+<!--
+  Generated template for the PaymentPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="main">
+      <button ion-button class="menu" start menuToggle>
+
+            <ion-icon name="menu"></ion-icon>
+          </button>
+    <ion-title>Payment</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-list-header>
+      Payment Methods
+    </ion-list-header>
+    <!-- once able to save cards -->
+    <!-- <ion-list>
+    <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
+      {{ item }}
+    </button>
+  </ion-list> -->
+
+    <button ion-item><ion-icon name="ios-card"></ion-icon> **** 1234</button>
+    <button ion-item><ion-icon name="ios-card"></ion-icon> **** 5678</button>
+    <button ion-item><ion-icon name="ios-card"></ion-icon> **** 9012</button>
+    <button ion-item class="addPay" no-lines><ion-icon name="md-add"></ion-icon> Add Payment Method</button>
+  </ion-list>
+
+  <button ion-button class="key" (click)="navigateToProfile()">Profile</button>
+
+
+
+
+
+</ion-content>

@@ -1,14 +1,24 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+
+<style>
+  ion-content {
+    background-color: #66cdaa;
+  }
+</style>
+
+<!-- <ion-header>
+<ion-navbar>
+  <ion-title>
+    Ionic Blank
+  </ion-title>
+</ion-navbar>
+</ion-header> -->
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+
+<h1 class="name">ConneCT</h1>
+
+<button ion-button (click)="navigateToLogin()" class="key" id="login">Login</button>
+<p></p>
+<button ion-button (click)="navigateToRegister()" class="key" id="reg">Register</button>
+
 </ion-content>

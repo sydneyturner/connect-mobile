@@ -1,1 +1,27 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<!-- <ion-nav [root]="rootPage"></ion-nav> -->
+
+<ion-menu [content]="content">
+    <ion-header no-border>
+        <ion-toolbar color="main">
+            <ion-title>Menu</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content no-border-top>
+        <div class="menu-top">
+            <!-- <h5 class="name" align="center">Sydney</h5> -->
+        </div>
+        <div class="pages">
+            <ion-list>
+                <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+                    {{p.title}}
+                </button>
+            </ion-list>
+        </div>
+
+    </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

@@ -1,0 +1,20 @@
+
+<ion-menu [content]="content">
+    <ion-content padding>
+      <ion-list>
+  
+        <button ion-item (click)="openPage(ProfilePage)">Profile</button>
+        <button ion-item (click)="openPage(PaymentPage)">Payment</button>
+        <!-- <button ion-item menuClose (click)="openPage(profilePage)">My Profile</button>
+        <button ion-item menuClose (click)="openPage(portfolioPage)">My Portfolio</button>
+        <button ion-item menuClose (click)="openPage(settingsPage)">Settings</button> -->
+  
+        <!-- <br>
+  
+        <button ion-button full (click)="navigateToHome()">Logout</button>
+        <button ion-item menuClose (click)="navigateToSettings()">Settings</button> -->
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  
+  <ion-nav #content [root]="rootPage" swipeBackEnabled="false"></ion-nav>

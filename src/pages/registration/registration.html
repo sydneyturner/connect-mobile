@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-navbar color="main">
+        
+        <ion-title>Registration</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content padding>
+  <div align="center">
+
+  </div>
+  <ion-list>
+      <br>
+      <ion-item-group>
+          <ion-item-divider>Personal Information</ion-item-divider>
+          <ion-item>
+              <ion-input type="text" placeholder="Firstname" [(ngModel)]="firstname"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-input type="text" placeholder="Lastname" [(ngModel)]="lastname"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-input type="text" placeholder="Enter an email" [(ngModel)]="email"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-input type="password" placeholder="Enter a password" [(ngModel)]="password"></ion-input>
+          </ion-item>
+          <ion-item>
+              <ion-input type="text" placeholder="Confirm Password" [(ngModel)]="passwordCheck" type="Password"></ion-input>
+          </ion-item>
+
+      </ion-item-group>
+  </ion-list>
+
+  <div align="center">
+      <button ion-button (click)="register()" class="key">Register</button>
+      <button ion-button clear small (click)="cancel()" class="cancel">
+          <u>Cancel</u>
+      </button>
+  </div>
+
+</ion-content>

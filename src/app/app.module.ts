@@ -6,24 +6,51 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { RegistrationPage } from '../pages/registration/registration';
+import { LoginPage } from '../pages/login/login';
+import { ProfilePage } from '../pages/profile/profile';
+import { HttpModule } from '@angular/http';
+import { AuthService } from '../auth.service';
+import { EditProfilePage } from '../pages/edit-profile/edit-profile';
+import { MenuPage } from '../pages/menu/menu';
+import { PaymentPage } from '../pages/payment/payment';
+import { AddPaymentPage } from '../pages/add-payment/add-payment';
+
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    RegistrationPage,
+    LoginPage,
+    ProfilePage,
+    EditProfilePage,
+    MenuPage,
+    PaymentPage,
+    AddPaymentPage
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    RegistrationPage,
+    LoginPage,
+    ProfilePage,
+    EditProfilePage,
+    MenuPage,
+    PaymentPage,
+    AddPaymentPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    AuthService,
+
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
