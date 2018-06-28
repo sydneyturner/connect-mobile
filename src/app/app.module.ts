@@ -15,6 +15,7 @@ import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 import { MenuPage } from '../pages/menu/menu';
 import { PaymentPage } from '../pages/payment/payment';
 import { AddPaymentPage } from '../pages/add-payment/add-payment';
+import { HistoryPage } from '../pages/history/history';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { AddPaymentPage } from '../pages/add-payment/add-payment';
     EditProfilePage,
     MenuPage,
     PaymentPage,
-    AddPaymentPage
+    AddPaymentPage,
+    HistoryPage
   ],
   imports: [
     BrowserModule,
@@ -44,7 +46,8 @@ import { AddPaymentPage } from '../pages/add-payment/add-payment';
     EditProfilePage,
     MenuPage,
     PaymentPage,
-    AddPaymentPage
+    AddPaymentPage,
+    HistoryPage
   ],
   providers: [
     StatusBar,

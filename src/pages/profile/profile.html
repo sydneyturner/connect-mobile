@@ -6,13 +6,13 @@
     <!-- <div align="center"><h1 class = "name"> Tiger's Milk </h1> </div>  -->
     <!-- <ion-title class="headerTitle">Profile</ion-title> -->
     <!-- <ion-buttons left start> -->
-        <button ion-button class="menu" start menuToggle>
-          <!-- menu toggle not working (unable to open menu)-->
-          <!-- class="menu"  -->
-            <ion-icon name="menu"></ion-icon>
-          </button>
+    <button ion-button class="menu" start menuToggle>
+      <!-- menu toggle not working (unable to open menu)-->
+      <!-- class="menu"  -->
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <!-- </ion-buttons> -->
-    
+
     <ion-buttons right>
       <button ion-button (click)="navigateToEditProfileModal()">Edit</button>
     </ion-buttons>
@@ -20,27 +20,29 @@
 </ion-header>
 
 <ion-content fullscreen parallax-header padding no-border-top>
-<div class="top">
+  <div class="top">
     <!-- <img src=" /assets/tiger.png" class="image"/> -->
     <!-- <ion-icon name="md-person" class="image" align="center" large></ion-icon> -->
     <h3 class="name" align="center">{{this.user.firstname}} {{this.user.lastname}}</h3>
-</div>
+  </div>
 
+  <div class="info">
+    <ion-list>
+      <ion-list-header>
+        <!-- in the future: put most recent places visited -->
+        Personal Information
+      </ion-list-header>
+      <ion-item>Firstname: {{this.user.firstname}}</ion-item>
+      <ion-item>Lastname: {{this.user.lastname}}</ion-item>
+      <ion-item>Email: {{this.user.email}}</ion-item>
+      <ion-item>Role: User</ion-item>
+    </ion-list>
+  </div>
 
-  <ion-list class="info">
-    <ion-list-header>
-      <!-- in the future: put most recent places visited -->
-      Personal Information
-    </ion-list-header>
-    <ion-item>Firstname: {{this.user.firstname}}</ion-item>
-    <ion-item>Lastname: {{this.user.lastname}}</ion-item>
-    <ion-item>Email: {{this.user.email}}</ion-item>
-    <ion-item>Role: User</ion-item>
-  </ion-list>
 
   <div class="logout">
-    <button ion-button (click)="logout()" class="key">Logout</button>
-    <button ion-button (click)="navigateToAddPayment()">Add Payment Page</button>
-    <button ion-button (click)="navigateToPayment()">Payment Page</button>
-</div>
+    <!-- <button ion-button (click)="logout()" class="key">Logout</button> -->
+    <!-- <button ion-button (click)="navigateToAddPayment()">Add Payment Page</button>
+    <button ion-button (click)="navigateToPayment()">Payment Page</button> -->
+  </div>
 </ion-content>

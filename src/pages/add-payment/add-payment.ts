@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-declare var Stripe;
 import { Http } from '@angular/http';
+
 /**
  * Generated class for the AddPaymentPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
+
+ declare var Stripe;
 
 @IonicPage()
 @Component({
@@ -59,8 +61,10 @@ export class AddPaymentPage {
     });
 
     var form = document.getElementById('payment-form');
+
     form.addEventListener('submit', event => {
       event.preventDefault();
+
         this.stripe.createSource(this.card)
           .then(result => {
             if (result.error) {
@@ -73,7 +77,7 @@ export class AddPaymentPage {
               this.navCtrl.pop();
             }
           });
-      //}
+
     });
   }
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { ProfilePage } from '../profile/profile';
+import { AddPaymentPage } from '../add-payment/add-payment';
 // declare var Stripe;
 
 /**
@@ -28,13 +29,9 @@ export class PaymentPage {
     console.log('ionViewDidLoad PaymentPage');
   }
 
-  // back(){
-  //   this.navCtrl.setRoot(ProfilePage);
-  //   this.navCtrl.pop();
-  // }
-
-  navigateToProfile(){
-    this.navCtrl.push(ProfilePage);
+  navigateToAdd(){
+    this.navCtrl.push(AddPaymentPage);
   }
+
 
 }

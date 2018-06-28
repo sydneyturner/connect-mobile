@@ -36,7 +36,7 @@
 .key {
     width: 100%;
     max-width: 100%;
-    background-color: #ffe497;
+    background-color: #fae71c;
     color: black;
 }
 
@@ -48,7 +48,7 @@
     margin: auto;;
     height: 100px;
     width: 100%;
-    background: linear-gradient(to bottom, #66cdaa, #72bba3);
+    background: linear-gradient(to bottom, #3e4734, #3e4734);
     // background: linear-gradient(to bottom, black,black);
     box-shadow: 5px 5px 5px lightgrey;
     // rgb(120, 186, 207)
@@ -57,4 +57,9 @@
 
 .pages {
     padding-top: 100px;
+}
+
+.logout {
+    padding-top: 50px;
+    color: red;
 }

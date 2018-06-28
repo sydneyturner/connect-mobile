@@ -11,7 +11,7 @@
 
             <ion-icon name="menu"></ion-icon>
           </button>
-    <ion-title>Payment</ion-title>
+    <ion-title align="center">Payment</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -33,10 +33,8 @@
     <button ion-item><ion-icon name="ios-card"></ion-icon> **** 1234</button>
     <button ion-item><ion-icon name="ios-card"></ion-icon> **** 5678</button>
     <button ion-item><ion-icon name="ios-card"></ion-icon> **** 9012</button>
-    <button ion-item class="addPay" no-lines><ion-icon name="md-add"></ion-icon> Add Payment Method</button>
+    <button ion-item class="addPay" no-lines (click)="navigateToAdd()"><ion-icon name="md-add"></ion-icon> Add Payment Method</button>
   </ion-list>
-
-  <button ion-button class="key" (click)="navigateToProfile()">Profile</button>
 
 
 
