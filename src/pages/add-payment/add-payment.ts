@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { Http } from '@angular/http';
 
 /**
@@ -22,7 +22,8 @@ export class AddPaymentPage {
   stripe = Stripe('pk_test_wwWAVD9vbXYMQY8hfODUZRjQ');
   card: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: Http,
+  public viewCtrl: ViewController) {
   }
 
   ionViewDidLoad() {
@@ -96,6 +97,12 @@ export class AddPaymentPage {
         error => {
           console.log(error);
         });
+  }
+
+
+  cancel() {
+    let data = { 'foo': 'bar' };
+    this.viewCtrl.dismiss(data);
   }
 
 

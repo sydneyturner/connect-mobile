@@ -16,7 +16,13 @@ import { MenuPage } from '../pages/menu/menu';
 import { PaymentPage } from '../pages/payment/payment';
 import { AddPaymentPage } from '../pages/add-payment/add-payment';
 import { HistoryPage } from '../pages/history/history';
+import { MapPage } from '../pages/map/map';
+import { GoogleMaps } from '@ionic-native/google-maps';
 
+import { Geolocation } from '@ionic-native/geolocation';
+import { IonicStorageModule } from '@ionic/storage';
+
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -29,12 +35,17 @@ import { HistoryPage } from '../pages/history/history';
     MenuPage,
     PaymentPage,
     AddPaymentPage,
-    HistoryPage
+    HistoryPage,
+    MapPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAErGB_r9WhjbMMsmoxm_iz_-sH78GTqA8'
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -47,13 +58,15 @@ import { HistoryPage } from '../pages/history/history';
     MenuPage,
     PaymentPage,
     AddPaymentPage,
-    HistoryPage
+    HistoryPage,
+    MapPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     AuthService,
-
+    GoogleMaps,
+    Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

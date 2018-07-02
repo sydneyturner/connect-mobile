@@ -1,4 +1,8 @@
 page-login {
+    ion-content {
+        background-color: #3e4734;
+    }
+
     .login {
         background-color: #fae71c;
         color: black;
@@ -13,15 +17,12 @@ page-login {
         margin-left: 75px;
     }
 
-//     ion-input {
-//         background-color: #3e4734;
-//     }
+    .item.item-label {
+        background-color: transparent;
+    }
 
-//     ion-list {
-//         background-color: #3e4734;
-//     }
-
-//     ion-label {
-//         background-color: #3e4734;
-//     }
+    .item.item-input {
+        background-color: transparent;
+        color: white;
+    }
 }

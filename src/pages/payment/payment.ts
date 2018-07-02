@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { ProfilePage } from '../profile/profile';
 import { AddPaymentPage } from '../add-payment/add-payment';
@@ -22,7 +22,7 @@ export class PaymentPage {
   // stripe = Stripe('pk_test_wwWAVD9vbXYMQY8hfODUZRjQ');
   // card: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController) {
   }
 
   ionViewDidLoad() {
@@ -31,6 +31,11 @@ export class PaymentPage {
 
   navigateToAdd(){
     this.navCtrl.push(AddPaymentPage);
+  }
+
+  navigateToAddModal(){
+    let modal = this.modalCtrl.create(AddPaymentPage);
+    modal.present();
   }
 
 

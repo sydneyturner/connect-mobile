@@ -4,7 +4,7 @@
 <ion-header no-border>
   <ion-navbar color="main" no-border>
     <!-- <div align="center"><h1 class = "name"> Tiger's Milk </h1> </div>  -->
-    <!-- <ion-title class="headerTitle">Profile</ion-title> -->
+   
     <!-- <ion-buttons left start> -->
     <button ion-button class="menu" start menuToggle>
       <!-- menu toggle not working (unable to open menu)-->
@@ -12,7 +12,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <!-- </ion-buttons> -->
-
+ <ion-title class="headerTitle">Profile</ion-title>
     <ion-buttons right>
       <button ion-button (click)="navigateToEditProfileModal()">Edit</button>
     </ion-buttons>
@@ -21,9 +21,8 @@
 
 <ion-content fullscreen parallax-header padding no-border-top>
   <div class="top">
-    <!-- <img src=" /assets/tiger.png" class="image"/> -->
-    <!-- <ion-icon name="md-person" class="image" align="center" large></ion-icon> -->
-    <h3 class="name" align="center">{{this.user.firstname}} {{this.user.lastname}}</h3>
+    <ion-icon name="md-person" class="element"></ion-icon>
+
   </div>
 
   <div class="info">
@@ -41,8 +40,6 @@
 
 
   <div class="logout">
-    <!-- <button ion-button (click)="logout()" class="key">Logout</button> -->
-    <!-- <button ion-button (click)="navigateToAddPayment()">Add Payment Page</button>
-    <button ion-button (click)="navigateToPayment()">Payment Page</button> -->
+
   </div>
 </ion-content>

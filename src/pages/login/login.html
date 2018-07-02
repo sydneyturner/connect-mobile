@@ -1,30 +1,35 @@
-<!-- <style>
-    ion-content {
-      background-color: #3e4734;
-    }
-  </style> -->
+<style>
+  ion-content {
+    background-color: #3e4734;
+  }
+</style>
 
 <ion-header no-border>
   <ion-navbar color="main">
-      
-      <ion-title>Login</ion-title>
+
+    <ion-title>Login</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding> 
+<ion-content padding>
   <ion-list>
+    <br>
+    <ion-item-group>
       <ion-item>
-          <ion-label stacked>Email</ion-label>
-          <ion-input type="email" [(ngModel)]="email"></ion-input>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="email" placeholder="Email" [(ngModel)]="email"></ion-input>
       </ion-item>
-
       <ion-item>
-          <ion-label stacked>Password</ion-label>
-          <ion-input type="password" [(ngModel)]="password"></ion-input>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" placeholder="Password" [(ngModel)]="password"></ion-input>
       </ion-item>
+    </ion-item-group>
   </ion-list>
-<div>
+
+
+
+  <div>
     <button ion-button clear class="login" (click)="login()">Login</button>
-</div>
+  </div>
 
 </ion-content>

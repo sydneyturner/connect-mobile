@@ -75,6 +75,12 @@ page-profile {
         
     }
 
+    ion-icon {
+        font-size: 50px;
+        padding-left: 45%;
+        // padding-right: 50%;
+    }
+
     .name {
         font-size: 30px;
         width: 100%;
@@ -102,6 +108,19 @@ page-profile {
         margin-bottom: 2px;
         // padding-left: 0;
         // padding-right: 30px;
+    }
+
+    // .image {
+    //     // align-self: center;
+    //     padding-top: 50px;
+    //     padding-left: 40px;
+    // }
+
+    .element {
+        font-size: 100px;
+        padding-top: 50px;
+        padding-left: 40%;
+        // padding-right: 50%;
     }
 
 
