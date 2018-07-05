@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import { AuthService } from '../../auth.service';
 import { ProfilePage } from '../profile/profile';
+import { MapPage } from '../map/map';
 
 /**
  * Generated class for the LoginPage page.
@@ -20,10 +21,10 @@ export class LoginPage {
   public email: string;
   public password: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthService) {
-      // if (localStorage.getItem("TOKEN")) {
-    //   this.app.getRootNav().setRoot(ProfilePage);
-    // }
+  constructor(public navCtrl: NavController, public navParams: NavParams, public authService: AuthService, public app: App) {
+      if (localStorage.getItem("TOKEN")) {
+      this.app.getRootNav().setRoot(MapPage);
+    }
   }
 
   ionViewDidLoad() {
@@ -38,7 +39,7 @@ export class LoginPage {
         return;
       }
 
-      this.navCtrl.setRoot(ProfilePage);
+      this.navCtrl.setRoot(MapPage);
       // this.navCtrl.setRoot(TabsPage);
     }
 

@@ -11,7 +11,7 @@ export class AuthService {
 
   login(email: string, password: string, callback: Function) {
     this.http
-      .post("http://localhost:3000/login", {
+      .post("http://localhost:3000/loginUser", {
         email: email,
         password: password
       })

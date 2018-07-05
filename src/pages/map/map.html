@@ -7,36 +7,17 @@
 <ion-header>
 
   <ion-navbar color="main">
-    <button ion-button class="menu" start menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
+      <button ion-button class="menu" start menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
     <ion-title align="center">Map</ion-title>
-    <!-- <ion-buttons end>
-      <button ion-button (click)="addMarker()">
-        <ion-icon name="add"></ion-icon>Add Marker</button>
-    </ion-buttons> -->
+  
   </ion-navbar>
 
-</ion-header>
+</ion-header> 
 
 
-<ion-content>
-  <!-- <div #map id="map"></div> -->
-  <!-- <div #map style="height:100%;"></div> -->
-
-
-  <!-- <agm-map [latitude]="lat" [longitude]="lng">
-    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-  </agm-map> -->
-<!-- 
-  <button ion-button full icon-left (click)="startTracking()" *ngIf="!isTracking">
-      <ion-icon name="locate"></ion-icon>
-      Start Tracking
-    </button>
-  <button ion-button full color="danger" icon-left (click)="stopTracking()" *ngIf="isTracking">
-      <ion-icon name="hand"></ion-icon>
-      Stop Tracking
-  </button> -->
+<ion-content fullscreen="true">
  
   <div #map id="map"></div>
  
@@ -47,5 +28,7 @@
       <button ion-button clear item-end (click)="showHistoryRoute(route.path)">View Route</button>
     </ion-item>
   </ion-list> -->
+
+  <button ion-buttton class="request" align="center">REQUEST</button>
 
 </ion-content>

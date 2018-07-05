@@ -4,6 +4,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Subscription } from 'rxjs/Subscription';
 import { filter } from 'rxjs/operators';
 import { Storage } from '@ionic/storage';
+import { Http } from '@angular/http';
 
 declare var google;
 @IonicPage()
@@ -26,7 +27,7 @@ export class MapPage {
     ['Hank Old Irish', -33.9216069, 18.4173553],
     ['La Parada', -33.92146, 18.41815],
     ['The Village Idiot', -33.91955, 18.42086],
-    ['Bus Stop #1',-33.92085139, 18.42090853],
+    ['Bus Stop #1', -33.92085139, 18.42090853],
     ['Bus Stop #2', -33.9225382, 18.41906944],
     ['Bus Stop #3', -33.92392681, 18.41752751],
     ['Beerhouse', -33.92552, 18.41607],
@@ -43,7 +44,7 @@ export class MapPage {
 
   positionSubscription: Subscription;
 
-  constructor(public navCtrl: NavController, private plt: Platform, private geolocation: Geolocation, private storage: Storage) { }
+  constructor(public navCtrl: NavController, private plt: Platform, private geolocation: Geolocation, private storage: Storage, public http: Http) { }
 
   ionViewDidLoad() {
     this.plt.ready().then(() => {
@@ -84,7 +85,7 @@ export class MapPage {
         // set stop locations and route
         this.setRedRoute();
         this.setLocations();
-        
+
       }).catch((error) => {
         console.log('Error getting location', error);
       });
@@ -109,7 +110,7 @@ export class MapPage {
   setLocations() {
     for (var i = 0; i < this.stops.length; i++) {
       var location = this.stops[i];
-      var position = new google.maps.LatLng( location[ 1 ], location[ 2 ] );
+      var position = new google.maps.LatLng(location[1], location[2]);
       var marker = new google.maps.Marker({
         map: this.map,
         position: position,
@@ -119,65 +120,59 @@ export class MapPage {
   }
 
   setRedRoute() {
+
     var locationCoords = [
-      {lat:-33.93052018, lng: 18.41023695},
-      {lat: -33.92995045, lng: 18.40929952},
-      {lat:-33.92994823, lng: 18.4090313},
-      {lat: -33.93011291, lng: 18.40875235},
-      {lat: -33.92994248, lng: 18.40830744},
-      {lat:-33.92983308, lng: 18.40808683},
-      {lat: -33.92972626, lng: 18.4079098},
-      {lat: -33.92942609, lng: 18.40798759},
+      { lat: -33.93052018, lng: 18.41023695 },
+      { lat: -33.92995045, lng: 18.40929952 },
+      { lat: -33.92994823, lng: 18.4090313 },
+      { lat: -33.93011291, lng: 18.40875235 },
+      { lat: -33.92994248, lng: 18.40830744 },
+      { lat: -33.92983308, lng: 18.40808683 },
+      { lat: -33.92972626, lng: 18.4079098 },
+      { lat: -33.92942609, lng: 18.40798759 },
 
-      {lat: -33.92915998, lng: 18.40812438},
-      {lat:-33.9286008, lng: 18.40867628},
-      {lat: -33.92761041, lng: 18.40965598},
-      {lat: -33.92691008, lng: 18.4103808},
+      { lat: -33.92915998, lng: 18.40812438 },
+      { lat: -33.9286008, lng: 18.40867628 },
+      { lat: -33.92761041, lng: 18.40965598 },
+      { lat: -33.92691008, lng: 18.4103808 },
 
-      {lat: -33.92674232, lng: 18.41072177},
-      {lat:-33.92573215, lng: 18.4117837},
-      {lat: -33.92627969, lng: 18.4125682},
-      {lat: -33.92464502, lng: 18.41433429},
+      { lat: -33.92674232, lng: 18.41072177 },
+      { lat: -33.92573215, lng: 18.4117837 },
+      { lat: -33.92627969, lng: 18.4125682 },
+      { lat: -33.92464502, lng: 18.41433429 },
 
-      {lat: -33.9232169, lng: 18.41592221},
-      {lat:-33.92253139, lng: 18.41652416},
-      {lat: -33.92182437, lng: 18.41735937},
-      {lat: -33.91950962, lng: 18.41983773},
+      { lat: -33.9232169, lng: 18.41592221 },
+      { lat: -33.92253139, lng: 18.41652416 },
+      { lat: -33.92182437, lng: 18.41735937 },
+      { lat: -33.91950962, lng: 18.41983773 },
 
-      {lat: -33.92051757, lng: 18.42125419},
-      {lat:-33.92147462, lng: 18.42022355},
-      {lat: -33.92501008, lng: 18.41632792},
-      {lat: -33.92573452, lng: 18.41556041},
+      { lat: -33.92051757, lng: 18.42125419 },
+      { lat: -33.92147462, lng: 18.42022355 },
+      { lat: -33.92501008, lng: 18.41632792 },
+      { lat: -33.92573452, lng: 18.41556041 },
 
-      {lat: -33.92668018, lng: 18.41449289},
-      {lat:-33.92694939, lng: 18.41416844},
-      {lat: -33.92705177, lng: 18.41377684},
-      {lat: -33.92717863, lng: 18.4135864},
+      { lat: -33.92668018, lng: 18.41449289 },
+      { lat: -33.92694939, lng: 18.41416844 },
+      { lat: -33.92705177, lng: 18.41377684 },
+      { lat: -33.92717863, lng: 18.4135864 },
 
-      {lat: -33.92770624, lng: 18.41303612},
-      {lat:-33.92923019, lng: 18.41145712},
-      {lat: -33.93050637, lng: 18.41025155},
+      { lat: -33.92770624, lng: 18.41303612 },
+      { lat: -33.92923019, lng: 18.41145712 },
+      { lat: -33.93050637, lng: 18.41025155 },
     ];
 
-  var route = new google.maps.Polyline({
-    path: locationCoords,
-    geodesic: true,
-    strokeColor:'#700d77',
-    strokeOpacity: 1.0,
-    strokeWeight: 10
-  });
+    var route = new google.maps.Polyline({
+      path: locationCoords,
+      geodesic: true,
+      strokeColor: '#700d77',
+      strokeOpacity: 1.0,
+      strokeWeight: 10
+    });
 
-  route.setMap(this.map);
+    route.setMap(this.map);
   }
 
 
-  // loadHistoricRoutes() {
-  //   this.storage.get('routes').then(data => {
-  //     if (data) {
-  //       this.previousTracks = data;
-  //     }
-  //   });
-  // }
 
   showPosition(position) {
     this.currentLat = position.coords.latitude;
@@ -202,21 +197,29 @@ export class MapPage {
 
 }
 
+    // this.http.get("http:localhost:3000/getTownRoute?jwt=" + localStorage.getItem("TOKEN"), {
 
-  // loadMap() {
-    // represents the location that we want to center the map on
-    // right now, it is set the Adelaide
-    // later: user Geolocation API to automatically set to users location
-    // let latLng = new google.maps.LatLng(-34.9290, 138.6010);
+    // })
+    //   .subscribe(
 
-    // let mapOptions = {
-    //   center: latLng,
-    //   zoom: 15,
-    //   // type of map 
-    //   mapTypeId: google.maps.MapTypeId.ROADMAP
-    // }
+    //     result => {
+    //       var locationCoords = [];
+    //       locationCoords = result.json();
 
-    // this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    //       var route = new google.maps.Polyline({
+    //         path: locationCoords,
+    //         geodesic: true,
+    //         strokeColor: '#700d77',
+    //         strokeOpacity: 1.0,
+    //         strokeWeight: 10
+    //       });
 
-    // console.log("loaded map");
-// }}
+    //       route.setMap(this.map);
+    //     },
+
+    //     error => {
+    //       console.log(error);
+    //     }
+    //   );
+
+

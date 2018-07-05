@@ -51,7 +51,7 @@ export class RegistrationPage {
 
   register() {
     if (this.registration.get('password').value == this.registration.get('passwordCheck').value) {
-      this.http.post("http://localhost:3000/registration", {
+      this.http.post("http://localhost:3000/registerUser", {
         password: this.registration.get('password').value,
         firstname: this.registration.get('firstname').value,
         lastname: this.registration.get('lastname').value,
