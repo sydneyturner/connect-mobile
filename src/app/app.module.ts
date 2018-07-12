@@ -24,6 +24,9 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { AgmCoreModule } from '@agm/core';
 
+import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
+
 @NgModule({
   declarations: [
     MyApp,
@@ -43,6 +46,7 @@ import { AgmCoreModule } from '@agm/core';
     HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
+    SocketIoModule.forRoot(config),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyAErGB_r9WhjbMMsmoxm_iz_-sH78GTqA8'
     })
