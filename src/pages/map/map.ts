@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { filter } from 'rxjs/operators';
 import { Storage } from '@ionic/storage';
 import { Http } from '@angular/http';
-import { Socket } from 'ng-socket-io';
+// import { Socket } from 'ng-socket-io';
 import { Observable } from 'rxjs/Observable';
 
 declare var google;
@@ -24,27 +24,10 @@ export class MapPage {
   positionArr: any;
   // latitude: number;
   // longitude: number;
-  stops = [
-    ['The Power and the Glory', -33.93009, 18.40808],
-    ['The Backpack Hostel', -33.92715, 18.41047],
-    ['Orphanage', -33.9258, 18.4132],
-    ['Arcade Cafe', -33.9240931, 18.4148569],
-    ['Hank Old Irish', -33.9216069, 18.4173553],
-    ['La Parada', -33.92146, 18.41815],
-    ['The Village Idiot', -33.91955, 18.42086],
-    ['Bus Stop #1', -33.92085139, 18.42090853],
-    ['Bus Stop #2', -33.9225382, 18.41906944],
-    ['Bus Stop #3', -33.92392681, 18.41752751],
-    ['Beerhouse', -33.92552, 18.41607],
-    ['Bus Stop #4', -33.92654112, 18.41466696],
-    ['Bus Stop #5', -33.92855058, 18.41214851],
-    ['Yours Truly', -33.9302, 18.4109]
-  ];
 
-  constructor(public navCtrl: NavController, private plt: Platform, private geolocation: Geolocation,
-    public socket: Socket, public http: Http) {
+  constructor(public navCtrl: NavController, private plt: Platform, private geolocation: Geolocation, public http: Http) {
     // think about: putting driver location into an array?
-
+      // public socket: Socket
   }
 
   ionViewDidLoad() {
@@ -79,8 +62,8 @@ export class MapPage {
         }
         // set stop locations and route
         this.setRedRoute();
-        // town locations
         this.setLocations();
+
         // show drivers
         // this.render();
       }).catch((error) => {
@@ -105,29 +88,51 @@ export class MapPage {
 
 
 
-  // set stops
+  // sets all stops
   setLocations() {
-    for (var i = 0; i < this.stops.length; i++) {
-      var location = this.stops[i];
-      var position = new google.maps.LatLng(location[1], location[2]);
-      var marker = new google.maps.Marker({
-        map: this.map,
-        position: position,
-        icon: this.markerColor("#f12dff"),
-      })
-    }
+    this.http.get("http://localhost:3000/stops/town-route", {
+
+    })
+      .subscribe(
+        result => {
+          var stops = [];
+          stops = result.json();
+          for (var i = 0; i < stops.length; i++) {
+            console.log(stops[i]);
+            var lat = stops[i].lat;
+            var lng = stops[i].lng;
+            var position = new google.maps.LatLng(lat, lng);
+            var marker = new google.maps.Marker({
+              map: this.map,
+              position: position,
+              icon: this.markerColor("#f12dff"),
+            })
+
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
 
+  // later: generalize to all routes
   setRedRoute() {
-
-    this.http.get("http://localhost:3000/town-route?jwt=" + localStorage.getItem("TOKEN"), {
+    this.http.get("http://localhost:3000/routes", {
 
     })
       .subscribe(
         result => {
           var locationCoords = [];
           locationCoords = result.json();
-
+          var newLoc = [];
+    
+          // for (var i = 0; i < locationCoords.length; i++){
+          //   console.log(locationCoords);
+          //   // newLoc[0] = locationCoords[2];
+          //   // newLoc[1] = locationCoords[3];
+          //   // console.log("lat:" + newLoc[0], "lat:" + newLoc[1])
+          // }
           var route = new google.maps.Polyline({
             path: locationCoords,
             geodesic: true,
@@ -176,6 +181,7 @@ export class MapPage {
 
 
   // getting driver location from socket and setting marker
+
   // render() {
   //   this.socket.on('sendToEveryone', (data) => {
   //     let driverLocation = new google.maps.LatLng(data.driverLat, data.driverLng);
@@ -194,7 +200,6 @@ export class MapPage {
   //   })
 
   // }
-
 
 
 }
@@ -248,6 +253,33 @@ export class MapPage {
     // });
 
     // route.setMap(this.map);
+
+      // stops = [ 
+  //   ['The Power and the Glory', -33.93009, 18.40808],
+  //   ['The Backpack Hostel', -33.92715, 18.41047],
+  //   ['Orphanage', -33.9258, 18.4132],
+  //   ['Arcade Cafe', -33.9240931, 18.4148569],
+  //   ['Hank Old Irish', -33.9216069, 18.4173553],
+  //   ['La Parada', -33.92146, 18.41815],
+  //   ['The Village Idiot', -33.91955, 18.42086],
+  //   ['Bus Stop #1', -33.92085139, 18.42090853],
+  //   ['Bus Stop #2', -33.9225382, 18.41906944],
+  //   ['Bus Stop #3', -33.92392681, 18.41752751],
+  //   ['Beerhouse', -33.92552, 18.41607],
+  //   ['Bus Stop #4', -33.92654112, 18.41466696],
+  //   ['Bus Stop #5', -33.92855058, 18.41214851],
+  //   ['Yours Truly', -33.9302, 18.4109]
+  // ];
+
+      // for (var i = 0; i < this.stops.length; i++) {
+    //   var location = this.stops[i];
+    //   var position = new google.maps.LatLng(location[1], location[2]);
+    //   var marker = new google.maps.Marker({
+    //     map: this.map,
+    //     position: position,
+    //     icon: this.markerColor("#f12dff"),
+    //   })
+    // }
 
 
 
