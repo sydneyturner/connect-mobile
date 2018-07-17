@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { filter } from 'rxjs/operators';
 import { Storage } from '@ionic/storage';
 import { Http } from '@angular/http';
-// import { Socket } from 'ng-socket-io';
+import { Socket } from 'ng-socket-io';
 import { Observable } from 'rxjs/Observable';
 
 declare var google;
@@ -22,10 +22,12 @@ export class MapPage {
   marker: any;
   driver: any;
   positionArr: any;
+  route: any;
   // latitude: number;
   // longitude: number;
 
-  constructor(public navCtrl: NavController, private plt: Platform, private geolocation: Geolocation, public http: Http) {
+  constructor(public navCtrl: NavController, private plt: Platform, private geolocation: Geolocation, 
+    public http: Http, public socket: Socket) {
     // think about: putting driver location into an array?
       // public socket: Socket
   }
@@ -65,7 +67,7 @@ export class MapPage {
         this.setLocations();
 
         // show drivers
-        // this.render();
+        this.render();
       }).catch((error) => {
         console.log('Error getting location', error);
       });
@@ -98,7 +100,7 @@ export class MapPage {
           var stops = [];
           stops = result.json();
           for (var i = 0; i < stops.length; i++) {
-            console.log(stops[i]);
+            // console.log(stops[i]);
             var lat = stops[i].lat;
             var lng = stops[i].lng;
             var position = new google.maps.LatLng(lat, lng);
@@ -123,17 +125,21 @@ export class MapPage {
     })
       .subscribe(
         result => {
+          var routes = [];
+          routes = result.json();
           var locationCoords = [];
-          locationCoords = result.json();
-          var newLoc = [];
-    
-          // for (var i = 0; i < locationCoords.length; i++){
-          //   console.log(locationCoords);
-          //   // newLoc[0] = locationCoords[2];
-          //   // newLoc[1] = locationCoords[3];
-          //   // console.log("lat:" + newLoc[0], "lat:" + newLoc[1])
+          // var route: any;
+          for (var i = 0; i < routes.length; i++) {
+            var lat = routes[i].lat;
+            var lng = routes[i].lng;
+            let latLng = new google.maps.LatLng(lat, lng);
+            locationCoords.push(latLng)
+            // console.log(locationCoords[i]);
+          }
+          // for(var i = 0; i < routes.length; i++) {
+          //   console.log(routes[i]);
           // }
-          var route = new google.maps.Polyline({
+          this.route = new google.maps.Polyline({
             path: locationCoords,
             geodesic: true,
             strokeColor: '#700d77',
@@ -141,7 +147,7 @@ export class MapPage {
             strokeWeight: 10
           });
 
-          route.setMap(this.map);
+          this.route.setMap(this.map);
         },
 
         error => {
@@ -182,24 +188,24 @@ export class MapPage {
 
   // getting driver location from socket and setting marker
 
-  // render() {
-  //   this.socket.on('sendToEveryone', (data) => {
-  //     let driverLocation = new google.maps.LatLng(data.driverLat, data.driverLng);
-  //     if (!this.marker) {
-  //       this.marker = new google.maps.Marker({
-  //         position: driverLocation,
-  //         map: this.map,
-  //         // animation
-  //         icon: this.markerColor("#f4b342"),
-  //       });
-  //     }
-  //     else {
-  //       this.marker.setPosition(driverLocation);
-  //     }
+  render() {
+    this.socket.on('sendToEveryone', (data) => {
+      let driverLocation = new google.maps.LatLng(data.driverLat, data.driverLng);
+      if (!this.marker) {
+        this.marker = new google.maps.Marker({
+          position: driverLocation,
+          map: this.map,
+          // animation
+          icon: this.markerColor("#f4b342"),
+        });
+      }
+      else {
+        this.marker.setPosition(driverLocation);
+      }
 
-  //   })
+    })
 
-  // }
+  }
 
 
 }
