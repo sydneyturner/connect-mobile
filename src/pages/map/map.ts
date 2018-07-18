@@ -5,8 +5,10 @@ import { Subscription } from 'rxjs/Subscription';
 import { filter } from 'rxjs/operators';
 import { Storage } from '@ionic/storage';
 import { Http } from '@angular/http';
-import { Socket } from 'ng-socket-io';
+
 import { Observable } from 'rxjs/Observable';
+import * as io from 'socket.io-client';
+import { InfoWindowManager } from '@agm/core';
 
 declare var google;
 @IonicPage()
@@ -23,13 +25,22 @@ export class MapPage {
   driver: any;
   positionArr: any;
   route: any;
-  // latitude: number;
-  // longitude: number;
+  driverMarker: any;
+  infoWindows: any;
 
-  constructor(public navCtrl: NavController, private plt: Platform, private geolocation: Geolocation, 
-    public http: Http, public socket: Socket) {
-    // think about: putting driver location into an array?
-      // public socket: Socket
+  private server: SocketIOClient.Socket;
+
+  constructor(public navCtrl: NavController, private plt: Platform, private geolocation: Geolocation,
+    public http: Http) {
+      this.server = io('http://localhost:3001');
+      this.infoWindows = [];
+    // this.server.on('sendToEveryone', (socket) => {
+    //   console.log('new connection made', socket);
+    //   console.log(socket.data.driverLat);
+    //   // console.log(socket.driverLng);
+    //   this.render(socket.data.driverLat, socket.data.driverLng);
+    // })
+
   }
 
   ionViewDidLoad() {
@@ -45,10 +56,11 @@ export class MapPage {
       this.geolocation.getCurrentPosition().then(pos => {
         let latLng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
         this.map.setCenter(latLng);
-        this.map.setZoom(16);
+        this.map.setZoom(17);
         // set marker at current user's current position
         this.currentLat = pos.coords.latitude;
         this.currentLong = pos.coords.longitude;
+
         let location = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
         this.map.panTo(location);
         if (!this.marker) {
@@ -62,20 +74,21 @@ export class MapPage {
         else {
           this.marker.setPosition(location);
         }
+
+        this.server.on('sendToEveryone', (socket) => {
+          console.log('new connection made', socket);
+          console.log(socket.data.driverLat);
+          this.render(socket.data.driverLat, socket.data.driverLng);
+        })
         // set stop locations and route
         this.setRedRoute();
         this.setLocations();
 
-        // show drivers
-        this.render();
       }).catch((error) => {
         console.log('Error getting location', error);
       });
     });
   }
-
-
-
 
   markerColor(color) {
     return {
@@ -88,8 +101,6 @@ export class MapPage {
     };
   }
 
-
-
   // sets all stops
   setLocations() {
     this.http.get("http://localhost:3000/stops/town-route", {
@@ -99,17 +110,22 @@ export class MapPage {
         result => {
           var stops = [];
           stops = result.json();
+
+          var marker: any;
+
           for (var i = 0; i < stops.length; i++) {
             // console.log(stops[i]);
             var lat = stops[i].lat;
             var lng = stops[i].lng;
             var position = new google.maps.LatLng(lat, lng);
-            var marker = new google.maps.Marker({
+
+            marker = new google.maps.Marker({
               map: this.map,
               position: position,
               icon: this.markerColor("#f12dff"),
-            })
-
+              title: stops[i].name
+            });
+            this.addInfoWindow(marker, stops[i].name);
           }
         },
         error => {
@@ -118,7 +134,53 @@ export class MapPage {
       );
   }
 
-  // later: generalize to all routes
+
+  addInfoWindow(marker, name) {
+    var infoContent = '<div class="infoWindow">' + name + '<br><button class="pickup" id="id1"">Pickup</button><br>' +
+      '<button class="dropoff">Dropoff</button>' + '</div>';
+
+    var infoWindow = new google.maps.InfoWindow({
+      content: infoContent
+    });
+    marker.addListener('click', () => {
+      this.closeAllInfoWindows();
+      infoWindow.open(this.map, marker);
+    });
+    this.infoWindows.push(infoWindow);
+  }
+
+  closeAllInfoWindows() {
+    for (let window of this.infoWindows) {
+      window.close();
+    }
+  }
+
+  setPickup() {
+    console.log('pickup clicked');
+    var marker = new google.maps.Marker({
+      map: this.map,
+      // position: position,
+      icon: this.markerColor("#f12dff"),
+      // title: stops[i].name
+    });
+    
+    // create new 'popup' with pickup
+    var contentString = '<div class="pickupPop">' + '<p>Pickup</p>' + '</div>';
+
+    var pickupPop = new google.maps.InfoWindow({
+      content: contentString
+    });
+    document.getElementById('id1').addEventListener('click', () => {
+      this.closeAllInfoWindows();
+      pickupPop.open(this.map, marker);
+    })
+    // marker.addListener('click', () => {
+    //   this.closeAllInfoWindows();
+    //   pickupPop.open(this.map, marker);
+    // })
+  }
+
+
   setRedRoute() {
     this.http.get("http://localhost:3000/routes", {
 
@@ -128,28 +190,22 @@ export class MapPage {
           var routes = [];
           routes = result.json();
           var locationCoords = [];
-          // var route: any;
           for (var i = 0; i < routes.length; i++) {
             var lat = routes[i].lat;
             var lng = routes[i].lng;
             let latLng = new google.maps.LatLng(lat, lng);
-            locationCoords.push(latLng)
-            // console.log(locationCoords[i]);
+            locationCoords.push(latLng);
           }
-          // for(var i = 0; i < routes.length; i++) {
-          //   console.log(routes[i]);
-          // }
           this.route = new google.maps.Polyline({
             path: locationCoords,
             geodesic: true,
-            strokeColor: '#700d77',
+            strokeColor: '#1784c4',
             strokeOpacity: 1.0,
             strokeWeight: 10
           });
 
           this.route.setMap(this.map);
         },
-
         error => {
           console.log(error);
         }
@@ -176,39 +232,26 @@ export class MapPage {
     }
   }
 
-  // getDriverLoc() {
-  //   let observable = new Observable(observer => {
-  //     this.socket.on('sendToEveryone', (data) => {
-  //       observer.next(data);
-  //     });
-  //   })
-  //   return observable;
-  // }
-
-
-  // getting driver location from socket and setting marker
-
-  render() {
-    this.socket.on('sendToEveryone', (data) => {
-      let driverLocation = new google.maps.LatLng(data.driverLat, data.driverLng);
-      if (!this.marker) {
-        this.marker = new google.maps.Marker({
-          position: driverLocation,
-          map: this.map,
-          // animation
-          icon: this.markerColor("#f4b342"),
-        });
-      }
-      else {
-        this.marker.setPosition(driverLocation);
-      }
-
-    })
-
+  render(lat, lng) {
+    console.log('Got driver location');
+    var image = " /assets/imgs/driver.png";
+    let driverLocation = new google.maps.LatLng(lat, lng);
+    if (!this.driverMarker) {
+      this.driverMarker = new google.maps.Marker({
+        position: driverLocation,
+        map: this.map,
+        icon: image,
+      });
+    }
+    else {
+      this.driverMarker.setPosition(driverLocation);
+    }
   }
+  //setInterval function toggle switch
 
 
 }
+
 
     // var locationCoords = [
     //   { lat: -33.93052018, lng: 18.41023695 },
