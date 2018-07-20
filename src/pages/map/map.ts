@@ -32,8 +32,8 @@ export class MapPage {
 
   constructor(public navCtrl: NavController, private plt: Platform, private geolocation: Geolocation,
     public http: Http) {
-      this.server = io('http://localhost:3001');
-      this.infoWindows = [];
+    this.server = io('http://localhost:3001');
+    this.infoWindows = [];
     // this.server.on('sendToEveryone', (socket) => {
     //   console.log('new connection made', socket);
     //   console.log(socket.data.driverLat);
@@ -136,7 +136,7 @@ export class MapPage {
 
 
   addInfoWindow(marker, name) {
-    var infoContent = '<div class="infoWindow">' + name + '<br><button class="pickup" id="id1"">Pickup</button><br>' +
+    var infoContent = '<div class="infoWindow">' + name + '<br><button class="pickup" onclick="setPickup()">Pickup</button><br>' +
       '<button class="dropoff">Dropoff</button>' + '</div>';
 
     var infoWindow = new google.maps.InfoWindow({
@@ -157,29 +157,22 @@ export class MapPage {
 
   setPickup() {
     console.log('pickup clicked');
-    var marker = new google.maps.Marker({
-      map: this.map,
-      // position: position,
-      icon: this.markerColor("#f12dff"),
-      // title: stops[i].name
-    });
-    
-    // create new 'popup' with pickup
-    var contentString = '<div class="pickupPop">' + '<p>Pickup</p>' + '</div>';
+    // create new pickup marker
+    var marker: any;
 
-    var pickupPop = new google.maps.InfoWindow({
-      content: contentString
-    });
-    document.getElementById('id1').addEventListener('click', () => {
+    marker.addListener('click', () => {
       this.closeAllInfoWindows();
-      pickupPop.open(this.map, marker);
+      marker = new google.maps.Marker({
+        map: this.map,
+        position: new google.maps.LatLng(-33.9288, 18.4108),
+        icon: this.markerColor("#f12dff"),
+      });
     })
-    // marker.addListener('click', () => {
-    //   this.closeAllInfoWindows();
-    //   pickupPop.open(this.map, marker);
-    // })
   }
 
+  setDropoff() {
+    // create dropoff marker
+  }
 
   setRedRoute() {
     this.http.get("http://localhost:3000/routes", {
